@@ -176,12 +176,19 @@ def render_landing_view():
         unsafe_allow_html=True,
     )
 
+    def switch_to_studio():
+        st.session_state["app_nav"] = "⚡ Workout Studio"
+
     # Primary Action CTA Button
     col_c1, col_c2, col_c3 = st.columns([1, 2, 1])
     with col_c2:
-        if st.button("🚀 Launch Workout Studio & Camera", type="primary", use_container_width=True, key="hero_cta_btn"):
-            st.session_state.app_nav = "⚡ Workout Studio"
-            st.rerun()
+        st.button(
+            "🚀 Launch Workout Studio & Camera",
+            type="primary",
+            use_container_width=True,
+            key="hero_cta_btn",
+            on_click=switch_to_studio
+        )
 
     # Telemetry Strip
     st.markdown(
@@ -356,6 +363,15 @@ def render_landing_view():
         """,
         unsafe_allow_html=True,
     )
+
+    col_hud1, col_hud2, col_hud3 = st.columns([1, 2, 1])
+    with col_hud2:
+        st.button(
+            "⚡ Open Camera & Start Workout →",
+            use_container_width=True,
+            key="hud_cta_btn",
+            on_click=switch_to_studio
+        )
 
     # Section 3: Author & Socials
     st.markdown(

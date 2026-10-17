@@ -73,15 +73,13 @@ def main():
 
         nav_options = ["🏠 Home & Biomechanics", "⚡ Workout Studio", "📊 Workout History"]
         if "app_nav" not in st.session_state:
-            st.session_state.app_nav = "🏠 Home & Biomechanics"
+            st.session_state["app_nav"] = "🏠 Home & Biomechanics"
 
-        current_nav = st.radio(
+        st.radio(
             "Navigation Menu",
             nav_options,
-            index=nav_options.index(st.session_state.app_nav) if st.session_state.app_nav in nav_options else 0,
-            key="nav_selection"
+            key="app_nav"
         )
-        st.session_state.app_nav = current_nav
 
     # Route 1: Home & Biomechanics Landing View
     if st.session_state.app_nav == "🏠 Home & Biomechanics":
