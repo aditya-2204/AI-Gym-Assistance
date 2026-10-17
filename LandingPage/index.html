@@ -3,303 +3,1135 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real-time AI GYM Trainer</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      @font-face {
-        font-family: "Averta";
-        src: url("fonts/Averta.woff2") format("woff2");
-        font-weight: normal;
-        font-style: normal;
-      }
-    </style>
+    <title>AI Gym Assistance — Real-time AI Workout Coach & Biomechanics Tracker</title>
+    
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
       rel="stylesheet"
     />
+
+    <style>
+      /* ============================================================
+         AI GYM ASSISTANCE — High-Performance Athletic Design System
+         ============================================================ */
+      :root {
+        --bg-dark: #07090e;
+        --bg-card: rgba(16, 22, 34, 0.75);
+        --bg-card-hover: rgba(22, 30, 46, 0.9);
+        --bg-surface: #0e1422;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --border-active: rgba(0, 240, 255, 0.35);
+        --border-hover: rgba(255, 255, 255, 0.18);
+
+        /* Neon & Athletic Color System */
+        --neon-cyan: #00f0ff;
+        --neon-cyan-glow: rgba(0, 240, 255, 0.25);
+        --neon-green: #10b981;
+        --neon-green-glow: rgba(16, 185, 129, 0.25);
+        --neon-amber: #f59e0b;
+        --neon-amber-glow: rgba(245, 158, 11, 0.25);
+
+        --text-white: #ffffff;
+        --text-sub: #94a3b8;
+        --text-dim: #64748b;
+
+        --font-heading: 'Outfit', sans-serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+
+        --radius-sm: 8px;
+        --radius-md: 14px;
+        --radius-lg: 20px;
+        --max-width: 1200px;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        background-image: 
+          radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+          radial-gradient(circle at 15% 70%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+        background-attachment: fixed;
+        color: var(--text-white);
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Subtle Grid Pattern */
+      .ambient-grid {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, black 30%, transparent 100%);
+      }
+
+      /* ── NAVBAR ── */
+      .navbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 40px;
+        background: rgba(7, 9, 14, 0.85);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-heading);
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: #fff;
+      }
+
+      .brand-badge {
+        width: 34px;
+        height: 34px;
+        background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        box-shadow: 0 0 15px var(--neon-cyan-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      .nav-links a {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-sub);
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--neon-cyan);
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #0ea5e9, var(--neon-cyan));
+        color: #000;
+        font-family: var(--font-heading);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 9px 20px;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+      }
+
+      /* ── HERO ── */
+      .hero-section {
+        position: relative;
+        z-index: 1;
+        min-height: 94vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 130px 24px 60px;
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(0, 240, 255, 0.08);
+        border: 1px solid rgba(0, 240, 255, 0.3);
+        padding: 7px 18px;
+        border-radius: 30px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        letter-spacing: 0.06em;
+        margin-bottom: 28px;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.12);
+      }
+
+      .live-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--neon-cyan);
+        box-shadow: 0 0 10px var(--neon-cyan);
+        animation: pulse 1.8s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.3; transform: scale(0.8); }
+      }
+
+      .hero-title {
+        font-family: var(--font-heading);
+        font-size: clamp(42px, 6.2vw, 76px);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        max-width: 960px;
+        margin-bottom: 24px;
+      }
+
+      .hero-title span.glow-gradient {
+        background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 80%, var(--neon-green) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero-subtitle {
+        max-width: 650px;
+        font-size: 18px;
+        color: var(--text-sub);
+        line-height: 1.6;
+        margin-bottom: 40px;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn-primary-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(135deg, #0ea5e9, var(--neon-cyan));
+        color: #030816;
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 800;
+        padding: 16px 34px;
+        border-radius: var(--radius-sm);
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 30px rgba(0, 240, 255, 0.35);
+      }
+
+      .btn-primary-action:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(0, 240, 255, 0.55);
+      }
+
+      .btn-secondary-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-hover);
+        color: #fff;
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 700;
+        padding: 16px 28px;
+        border-radius: var(--radius-sm);
+        backdrop-filter: blur(10px);
+        transition: all 0.2s ease;
+      }
+
+      .btn-secondary-action:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--neon-cyan);
+        transform: translateY(-2px);
+      }
+
+      /* Performance Telemetry Strip */
+      .telemetry-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        margin-top: 70px;
+        width: 100%;
+        max-width: 950px;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+      }
+
+      .telemetry-item {
+        padding: 24px 20px;
+        text-align: center;
+        border-right: 1px solid var(--border-subtle);
+      }
+
+      .telemetry-item:last-child {
+        border-right: none;
+      }
+
+      .telemetry-num {
+        font-family: var(--font-heading);
+        font-size: 34px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+
+      .telemetry-num span {
+        color: var(--neon-cyan);
+      }
+
+      .telemetry-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      /* ── COMMON SECTION ── */
+      .content-section {
+        position: relative;
+        z-index: 1;
+        padding: 100px 24px;
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .section-heading-wrap {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-kicker {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+
+      .section-headline {
+        font-family: var(--font-heading);
+        font-size: clamp(32px, 4.2vw, 48px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        margin-bottom: 14px;
+      }
+
+      .section-lead {
+        font-size: 16px;
+        color: var(--text-sub);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* ── BIOMECHANICS EXERCISE CARDS ── */
+      .exercise-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 28px;
+      }
+
+      .exercise-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(14px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .exercise-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+        transition: background 0.3s;
+      }
+
+      .exercise-card:hover {
+        background: var(--bg-card-hover);
+        border-color: var(--border-active);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.15);
+      }
+
+      .exercise-card:hover::before {
+        background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+      }
+
+      .card-top-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .card-icon-avatar {
+        width: 52px;
+        height: 52px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+      }
+
+      .card-status-chip {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid rgba(0, 240, 255, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        letter-spacing: 0.05em;
+      }
+
+      .card-title {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .card-description {
+        font-size: 14px;
+        color: var(--text-sub);
+        line-height: 1.55;
+        margin-bottom: 22px;
+      }
+
+      .telemetry-checklist {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .telemetry-checklist li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13.5px;
+        color: #cbd5e1;
+      }
+
+      .check-bullet {
+        width: 18px;
+        height: 18px;
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--neon-green);
+        font-size: 11px;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .card-bottom-telemetry {
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--text-dim);
+      }
+
+      .card-bottom-telemetry strong {
+        color: var(--neon-cyan);
+      }
+
+      /* ── LIVE HUD WORKOUT SIMULATOR ── */
+      .hud-master-frame {
+        background: #090e18;
+        border: 1px solid var(--border-active);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 24px 65px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 240, 255, 0.15);
+        overflow: hidden;
+        max-width: 960px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .hud-header-bar {
+        background: #0f1624;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .hud-window-controls {
+        display: flex;
+        gap: 8px;
+      }
+
+      .window-pip {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+      }
+      .pip-red { background: #ef4444; }
+      .pip-yellow { background: #f59e0b; }
+      .pip-green { background: #10b981; }
+
+      .hud-live-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        background: rgba(0, 240, 255, 0.08);
+        border: 1px solid rgba(0, 240, 255, 0.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+
+      .hud-main-viewport {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        padding: 36px 30px;
+        gap: 30px;
+        align-items: center;
+      }
+
+      @media (max-width: 800px) {
+        .hud-main-viewport {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .camera-canvas-sim {
+        background: radial-gradient(circle at 50% 50%, #151e30 0%, #0a0f1a 100%);
+        border: 1px solid var(--border-hover);
+        border-radius: var(--radius-md);
+        padding: 34px 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .canvas-reticle {
+        position: absolute;
+        inset: 12px;
+        border: 1px dashed rgba(0, 240, 255, 0.2);
+        border-radius: 8px;
+        pointer-events: none;
+      }
+
+      .athlete-wireframe {
+        font-size: 80px;
+        margin-bottom: 16px;
+        filter: drop-shadow(0 0 20px var(--neon-cyan-glow));
+      }
+
+      .joint-telemetry-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 240, 255, 0.15);
+        border: 1px solid var(--neon-cyan);
+        color: #fff;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 700;
+        padding: 6px 16px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+      }
+
+      .pose-confidence {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--neon-green);
+      }
+
+      .hud-stats-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .hud-data-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        padding: 14px 18px;
+      }
+
+      .hud-data-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .hud-data-value {
+        font-family: var(--font-heading);
+        font-size: 22px;
+        font-weight: 800;
+        color: #fff;
+      }
+
+      .coach-voice-card {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        border-radius: var(--radius-sm);
+        padding: 16px 18px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+
+      .coach-avatar {
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .coach-voice-title {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--neon-green);
+        margin-bottom: 4px;
+      }
+
+      .coach-voice-quote {
+        font-size: 13.5px;
+        color: #e2e8f0;
+        line-height: 1.5;
+      }
+
+      .hud-footer-action-bar {
+        background: #0d1422;
+        border-top: 1px solid var(--border-subtle);
+        padding: 18px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      /* ── ARCHITECTURE SECTION ── */
+      .architecture-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+      }
+
+      .arch-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: 28px;
+        transition: all 0.25s ease;
+      }
+
+      .arch-card:hover {
+        background: var(--bg-card-hover);
+        border-color: var(--border-hover);
+        transform: translateY(-3px);
+      }
+
+      .arch-badge-icon {
+        font-size: 28px;
+        margin-bottom: 16px;
+        display: inline-block;
+      }
+
+      .arch-card h3 {
+        font-family: var(--font-heading);
+        font-size: 19px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+
+      .arch-card p {
+        font-size: 14px;
+        color: var(--text-sub);
+        line-height: 1.6;
+      }
+
+      /* ── CONNECT / AUTHOR ── */
+      .author-wrapper {
+        text-align: center;
+        max-width: 650px;
+        margin: 0 auto;
+      }
+
+      .social-button-row {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 36px;
+        flex-wrap: wrap;
+      }
+
+      .social-link-card {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-subtle);
+        color: #fff;
+        font-family: var(--font-heading);
+        font-size: 14px;
+        font-weight: 700;
+        padding: 14px 26px;
+        border-radius: var(--radius-sm);
+        transition: all 0.25s ease;
+      }
+
+      .social-link-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--neon-cyan);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 240, 255, 0.2);
+      }
+
+      .social-icon-box {
+        display: flex;
+        align-items: center;
+      }
+
+      /* ── FOOTER ── */
+      .site-footer {
+        border-top: 1px solid var(--border-subtle);
+        padding: 34px 24px;
+        text-align: center;
+        font-size: 13.5px;
+        color: var(--text-dim);
+        margin-top: 80px;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 768px) {
+        .navbar { padding: 14px 20px; }
+        .nav-links { display: none; }
+        .telemetry-strip { grid-template-columns: 1fr 1fr; }
+        .telemetry-item:nth-child(2) { border-right: none; }
+        .telemetry-item { border-bottom: 1px solid var(--border-subtle); }
+        .exercise-cards-grid { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
   <body>
-    <!-- GRID OVERLAY -->
-    <div class="grid-overlay" aria-hidden="true"></div>
+    <!-- Background Ambient Grid -->
+    <div class="ambient-grid" aria-hidden="true"></div>
 
-    <!-- NAV -->
-    <nav class="nav">
-      <div class="nav-logo">
-        <span class="logo-bracket">(</span>AI GYM COACH<span
-          class="logo-bracket"
-          >)</span
-        >
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <div class="brand-badge">🏋️</div>
+        <span>AI GYM ASSISTANCE</span>
       </div>
       <div class="nav-links">
-        <a href="#visuals">Gallery</a>
-        <a href="#demo">Demo</a>
-        <a href="#contact">Contact</a>
+        <a href="#exercises">Biomechanics</a>
+        <a href="#demo">Live HUD Demo</a>
+        <a href="#features">Architecture</a>
+        <a href="#contact">Connect</a>
       </div>
+      <a href="http://localhost:8501" target="_blank" rel="noopener" class="nav-cta">
+        <span>Launch App</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero" id="hero">
-      <div class="hero-tag">
-        <span class="dot"></span>
-        <span>AI-POWERED · REAL-TIME · GYM COACH</span>
+    <!-- Hero Section -->
+    <header class="hero-section" id="hero">
+      <div class="hero-pill">
+        <span class="live-dot"></span>
+        <span>COMPUTER VISION · REPETITION COUNTER · VOICE COACH</span>
       </div>
 
       <h1 class="hero-title">
-        <span class="line-one">REAL-TIME</span>
-        <span class="line-two">AI GYM<br />COACH</span>
+        Train with Perfect Form.<br />
+        <span class="glow-gradient">Real-Time AI Workout Coaching.</span>
       </h1>
 
-      <p class="hero-sub">
-        Your form. Analyzed. Corrected. In milliseconds.<br />
-        Computer vision that watches every rep and tells you exactly what to
-        fix.
+      <p class="hero-subtitle">
+        High-precision 33-point skeletal pose estimation, automated repetition counting,
+        and proactive biomechanical feedback streamed directly through your camera.
       </p>
 
-      <div class="hero-cta-row">
-        <a
-          href="http://localhost:8501"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-primary"
-          id="cta-button"
-        >
-          <span>Try it live</span>
+      <div class="hero-actions">
+        <a href="http://localhost:8501" target="_blank" rel="noopener" class="btn-primary-action" id="hero-start-btn">
+          <span>Start Workout (Launch Camera)</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M3 8H13M13 8L9 4M13 8L9 12"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+            <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </a>
-        <a href="#demo-video" class="btn-ghost">WATCH DEMO ↓</a>
+        <a href="#demo" class="btn-secondary-action">
+          <span>View Real-Time HUD ↓</span>
+        </a>
       </div>
 
-      <!-- Live metrics strip -->
-      <div class="metrics-strip">
-        <div class="metric">
-          <span class="metric-val">100<span class="unit">ms</span></span>
-          <span class="metric-label">Avg Latency</span>
+      <!-- Telemetry Strip -->
+      <div class="telemetry-strip">
+        <div class="telemetry-item">
+          <div class="telemetry-num">&lt;100<span>ms</span></div>
+          <div class="telemetry-label">Frame Latency</div>
         </div>
-        <div class="metric-divider"></div>
-        <div class="metric">
-          <span class="metric-val">5<span class="unit">+</span></span>
-          <span class="metric-label">Exercises</span>
+        <div class="telemetry-item">
+          <div class="telemetry-num">5<span> Moves</span></div>
+          <div class="telemetry-label">Exercise Detectors</div>
         </div>
-        <div class="metric-divider"></div>
-        <div class="metric">
-          <span class="metric-val">95<span class="unit">%</span></span>
-          <span class="metric-label">Form Accuracy</span>
+        <div class="telemetry-item">
+          <div class="telemetry-num">33<span> Pts</span></div>
+          <div class="telemetry-label">MediaPipe Landmarks</div>
         </div>
-      </div>
-    </section>
-
-    <!-- VISUAL SECTION -->
-    <section class="visuals" id="visuals">
-      <div class="section-header center-header">
-        <span class="section-tag">// GALLERY</span>
-        <h2 class="section-title">Built for<br /><em>real athletes</em></h2>
-      </div>
-
-      <div class="card-grid">
-        <!-- Card 1 -->
-        <div class="img-card card-tilt-left card-float-1">
-          <div class="card-inner">
-            <div class="card-img-wrap">
-              <!-- Replace src with your image -->
-              <img
-                src="./IMGs/i1.png"
-                alt="Squat form analysis"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              />
-              <div class="card-scan-line"></div>
-            </div>
-            <div class="card-corner tl"></div>
-            <div class="card-corner tr"></div>
-            <div class="card-corner bl"></div>
-            <div class="card-corner br"></div>
-          </div>
-        </div>
-
-        <!-- Card 2 — tall center -->
-        <div class="img-card card-center card-float-2">
-          <div class="card-inner">
-            <div class="card-img-wrap">
-              <img
-                src="./IMGs/i2.png"
-                alt="Deadlift posture feedback"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              />
-              <div class="card-scan-line"></div>
-            </div>
-            <div class="card-corner tl"></div>
-            <div class="card-corner tr"></div>
-            <div class="card-corner bl"></div>
-            <div class="card-corner br"></div>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="img-card card-tilt-right card-float-3">
-          <div class="card-inner">
-            <div class="card-img-wrap">
-              <img
-                src="./IMGs/i3.png"
-                alt="Overhead press alignment"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              />
-              <div class="card-scan-line"></div>
-            </div>
-            <div class="card-corner tl"></div>
-            <div class="card-corner tr"></div>
-            <div class="card-corner bl"></div>
-            <div class="card-corner br"></div>
-          </div>
-        </div>
-
-        <div class="img-card card-tilt-right card-float-4">
-          <div class="card-inner"> 
-            <div class="card-img-wrap">
-              <img
-                src="./IMGs/i4.png"
-                alt="Overhead press alignment"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              />
-              <div class="card-scan-line"></div>
-            </div>
-            <div class="card-corner tl"></div>
-            <div class="card-corner tr"></div>
-            <div class="card-corner bl"></div>
-            <div class="card-corner br"></div>
-          </div>
-        </div>
-
-        <div class="img-card card-center card-float-5">
-          <div class="card-inner">
-            <div class="card-img-wrap">
-              <img
-                src="./IMGs/i5.png"
-                alt="Overhead press alignment"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              />
-              <div class="card-scan-line"></div>
-            </div>
-            <div class="card-corner tl"></div>
-            <div class="card-corner tr"></div>
-            <div class="card-corner bl"></div>
-            <div class="card-corner br"></div>
-          </div>
-        </div>
-
-        <div class="img-card card-tilt-left card-float-6">
-          <div class="card-inner">
-            <div class="card-img-wrap">
-              <img
-                src="./IMGs/i6.png"
-                alt="Overhead press alignment"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              />
-              <div class="card-scan-line"></div>
-            </div>
-            <div class="card-corner tl"></div>
-            <div class="card-corner tr"></div>
-            <div class="card-corner bl"></div>
-            <div class="card-corner br"></div>
-          </div>
+        <div class="telemetry-item">
+          <div class="telemetry-num">100<span>%</span></div>
+          <div class="telemetry-label">On-Device Privacy</div>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- DEMO SECTION -->
-    <section class="demo" id="demo">
-      <div class="section-header center-header">
-        <span class="section-tag">// DEMO</span>
-        <h2 class="section-title">See it in<br /><em>action</em></h2>
-        <p class="section-desc">
-          Watch the AI detect and correct form errors in real-time. No hardware
-          required — just your phone or webcam.
+    <!-- Supported Exercises & Biomechanics -->
+    <section class="content-section" id="exercises">
+      <div class="section-heading-wrap">
+        <span class="section-kicker">// BIOMECHANICS & JOINT TRACKING</span>
+        <h2 class="section-headline">Form Detection for 5 Core Movements</h2>
+        <p class="section-lead">
+          Real-time geometric vector math calculates limb angles, joint stabilization, and tempo to guarantee proper form on every rep.
         </p>
       </div>
 
-      <div class="video-wrapper" id="demo-video">
-        <div class="video-glow"></div>
-        <div class="video-container">
-          <div class="video-corner tl"></div>
-          <div class="video-corner tr"></div>
-          <div class="video-corner bl"></div>
-          <div class="video-corner br"></div>
-          <div class="video-status">
-            <span class="dot pulse-dot"></span>
-            <span>DEMO</span>
+      <div class="exercise-cards-grid">
+        <!-- Squats Card -->
+        <article class="exercise-card">
+          <div>
+            <div class="card-top-meta">
+              <div class="card-icon-avatar">🏋️‍♂️</div>
+              <span class="card-status-chip">DEPTH &lt; 90°</span>
+            </div>
+            <h3 class="card-title">Squats</h3>
+            <p class="card-description">
+              Monitors hip-to-knee-to-ankle flexion angles to ensure parallel depth while tracking torso angle to avoid dangerous spine collapse.
+            </p>
+            <ul class="telemetry-checklist">
+              <li><span class="check-bullet">✓</span> Knee flexion angle depth tracking</li>
+              <li><span class="check-bullet">✓</span> Torso & spine verticality check</li>
+              <li><span class="check-bullet">✓</span> Automatic bottom-out rep count trigger</li>
+            </ul>
           </div>
-          <!-- Replace with your video. Options:
-             MP4:    <video src="your-demo.mp4" controls></video>
-             YouTube: <iframe src="https://www.youtube.com/embed/YOUR_ID" ...></iframe>
-        -->
-          <video src="videos/video.mp4" controls playsinline></video>
-          <!-- <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
-        </div>
+          <div class="card-bottom-telemetry">
+            <span>TARGET: PARALLEL DEPTH</span>
+            <strong>ACTIVE TRACKER</strong>
+          </div>
+        </article>
+
+        <!-- Biceps Curls Card -->
+        <article class="exercise-card">
+          <div>
+            <div class="card-top-meta">
+              <div class="card-icon-avatar">🦾</div>
+              <span class="card-status-chip">FLEXION &lt; 45°</span>
+            </div>
+            <h3 class="card-title">Biceps Curls</h3>
+            <p class="card-description">
+              Tracks elbow hinge isolation and checks upper body swing to eliminate momentum cheating and enforce maximum bicep tension.
+            </p>
+            <ul class="telemetry-checklist">
+              <li><span class="check-bullet">✓</span> Elbow joint isolation & torso pin check</li>
+              <li><span class="check-bullet">✓</span> Swing detection & momentum penalty</li>
+              <li><span class="check-bullet">✓</span> Full extension reset threshold (&gt; 160°)</li>
+            </ul>
+          </div>
+          <div class="card-bottom-telemetry">
+            <span>TARGET: STRICT ISOLATION</span>
+            <strong>ACTIVE TRACKER</strong>
+          </div>
+        </article>
+
+        <!-- Push-ups Card -->
+        <article class="exercise-card">
+          <div>
+            <div class="card-top-meta">
+              <div class="card-icon-avatar">💪</div>
+              <span class="card-status-chip">ELBOW 90° DEPTH</span>
+            </div>
+            <h3 class="card-title">Push-ups</h3>
+            <p class="card-description">
+              Checks 180° body plank alignment from shoulder to ankle while evaluating elbow flexion depth at the bottom of the movement.
+            </p>
+            <ul class="telemetry-checklist">
+              <li><span class="check-bullet">✓</span> Elbow depth angle verification</li>
+              <li><span class="check-bullet">✓</span> Straight body plank alignment tracker</li>
+              <li><span class="check-bullet">✓</span> Hip sag & pike fault detection</li>
+            </ul>
+          </div>
+          <div class="card-bottom-telemetry">
+            <span>TARGET: FULL PLANK RANGE</span>
+            <strong>ACTIVE TRACKER</strong>
+          </div>
+        </article>
+
+        <!-- Shoulder Press Card -->
+        <article class="exercise-card">
+          <div>
+            <div class="card-top-meta">
+              <div class="card-icon-avatar">🏋️</div>
+              <span class="card-status-chip">LOCKOUT &gt; 165°</span>
+            </div>
+            <h3 class="card-title">Shoulder Press</h3>
+            <p class="card-description">
+              Tracks bilateral arm drive symmetry and complete overhead extension while actively monitoring against excessive lower back arching.
+            </p>
+            <ul class="telemetry-checklist">
+              <li><span class="check-bullet">✓</span> Left vs. right arm drive symmetry</li>
+              <li><span class="check-bullet">✓</span> Full vertical overhead lockout check</li>
+              <li><span class="check-bullet">✓</span> Lumbar spine arch hyperextension warning</li>
+            </ul>
+          </div>
+          <div class="card-bottom-telemetry">
+            <span>TARGET: OVERHEAD LOCKOUT</span>
+            <strong>ACTIVE TRACKER</strong>
+          </div>
+        </article>
+
+        <!-- Lunges Card -->
+        <article class="exercise-card">
+          <div>
+            <div class="card-top-meta">
+              <div class="card-icon-avatar">🧘</div>
+              <span class="card-status-chip">KNEE 90° ANGLE</span>
+            </div>
+            <h3 class="card-title">Lunges</h3>
+            <p class="card-description">
+              Evaluates unilateral leg loading, front knee alignment over the ankle, and torso stability during dynamic split squats.
+            </p>
+            <ul class="telemetry-checklist">
+              <li><span class="check-bullet">✓</span> Front knee 90° angle measurement</li>
+              <li><span class="check-bullet">✓</span> Torso upright stability index</li>
+              <li><span class="check-bullet">✓</span> Independent leg repetition counter</li>
+            </ul>
+          </div>
+          <div class="card-bottom-telemetry">
+            <span>TARGET: UNILATERAL DEPTH</span>
+            <strong>ACTIVE TRACKER</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Real-time HUD Simulator -->
+    <section class="content-section" id="demo">
+      <div class="section-heading-wrap">
+        <span class="section-kicker">// REAL-TIME CAMERA TELEMETRY</span>
+        <h2 class="section-headline">Interactive Vision HUD Simulation</h2>
+        <p class="section-lead">
+          Here is what happens in the live app: your camera feed is evaluated in real time while an AI voice coach gives you instant feedback.
+        </p>
       </div>
 
-      <!-- feature callouts below video -->
-      <div class="feature-row">
-        <div class="feature">
-          <span class="feature-icon">⬡</span>
-          <strong>Pose Detection</strong>
+      <div class="hud-master-frame">
+        <div class="hud-header-bar">
+          <div class="hud-window-controls">
+            <span class="window-pip pip-red"></span>
+            <span class="window-pip pip-yellow"></span>
+            <span class="window-pip pip-green"></span>
+          </div>
+          <div class="hud-live-indicator">
+            <span class="live-dot"></span>
+            <span>STREAMLIT WEBRTC HUD — ACTIVE</span>
+          </div>
         </div>
-        <div class="feature">
-          <span class="feature-icon">⬡</span>
-          <strong>Audio Feedback</strong>
+
+        <div class="hud-main-viewport">
+          <!-- Simulated Camera Canvas -->
+          <div class="camera-canvas-sim">
+            <div class="canvas-reticle"></div>
+            <div class="athlete-wireframe">🧍‍♂️</div>
+            <div class="joint-telemetry-tag">
+              <span>KNEE ANGLE: 86° (OPTIMAL DEPTH)</span>
+            </div>
+            <div class="pose-confidence">
+              ✓ 33/33 SKELETAL LANDMARKS LOCKED
+            </div>
+          </div>
+
+          <!-- Live Metrics Stack -->
+          <div class="hud-stats-stack">
+            <div class="hud-data-card">
+              <div class="hud-data-label">EXERCISE & SET TARGET</div>
+              <div class="hud-data-value">Squats — Set 2 of 3</div>
+            </div>
+
+            <div class="hud-data-card">
+              <div class="hud-data-label">REPETITION COUNTER</div>
+              <div class="hud-data-value" style="color: var(--neon-cyan);">8 / 12 Reps Completed</div>
+            </div>
+
+            <div class="coach-voice-card">
+              <span class="coach-avatar">🤖</span>
+              <div>
+                <div class="coach-voice-title">AI COACH (VOICE PIPELINE)</div>
+                <p class="coach-voice-quote">
+                  "Great depth on rep 8! Keep your chest upright and drive through your heels."
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="feature">
-          <span class="feature-icon">⬡</span>
-          <strong>Rep Counter</strong>
-        </div>
-        <div class="feature">
-          <span class="feature-icon">⬡</span>
-          <strong>Works in Real-time</strong>
+
+        <div class="hud-footer-action-bar">
+          <span style="font-size: 13.5px; color: var(--text-sub);">
+            Ready to test on your own camera?
+          </span>
+          <a href="http://localhost:8501" target="_blank" rel="noopener" class="btn-primary-action" style="padding: 11px 24px; font-size: 13.5px;">
+            <span>Open Streamlit App & Start Camera →</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section class="contact" id="contact">
-      <div class="contact-inner">
-        <span class="section-tag">// LET'S CONNECT</span>
-        <h2 class="contact-title">
-          Built by a human.<br /><em>Backed by data.</em>
-        </h2>
-        <p class="contact-desc">
-          Open to opportunities in ML engineering, computer vision, and AI
-          product roles.
+    <!-- Core Architecture -->
+    <section class="content-section" id="features">
+      <div class="section-heading-wrap">
+        <span class="section-kicker">// ENGINEERING STACK</span>
+        <h2 class="section-headline">Robust, Private, & Ultra Low Latency</h2>
+      </div>
+
+      <div class="architecture-grid">
+        <div class="arch-card">
+          <span class="arch-badge-icon">⚡</span>
+          <h3>Google MediaPipe</h3>
+          <p>
+            Executes ML pose landmark models directly on incoming video frames with zero cloud delay.
+          </p>
+        </div>
+
+        <div class="arch-card">
+          <span class="arch-badge-icon">🎙️</span>
+          <h3>Groq LLM Coaching</h3>
+          <p>
+            Analyzes your repetition cadence and triggers proactive audio encouragement and form reminders.
+          </p>
+        </div>
+
+        <div class="arch-card">
+          <span class="arch-badge-icon">📊</span>
+          <h3>SQLite Persistence</h3>
+          <p>
+            Automatically stores completed sets, repetition volume, and workout history per user profile.
+          </p>
+        </div>
+
+        <div class="arch-card">
+          <span class="arch-badge-icon">🔒</span>
+          <h3>Client-Side Camera Privacy</h3>
+          <p>
+            Video frames process locally on your machine via WebRTC. Camera feeds are never transmitted externally.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect & Author Section -->
+    <section class="content-section" id="contact">
+      <div class="author-wrapper">
+        <span class="section-kicker">// CREATOR</span>
+        <h2 class="section-headline">Built by Aditya Saxena</h2>
+        <p class="section-lead">
+          AI & Machine Learning Engineer specializing in computer vision, deep learning, and generative AI.
         </p>
 
-        <div class="social-grid">
+        <div class="social-button-row">
           <!-- LinkedIn -->
           <a
             href="https://www.linkedin.com/in/aditya-saxena-976511281"
             target="_blank"
             rel="noopener"
-            class="social-btn"
+            class="social-link-card"
             aria-label="LinkedIn"
           >
-            <span class="social-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="22"
-                height="22"
-              >
-                <path
-                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                />
+            <span class="social-icon-box">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
               </svg>
             </span>
-            <span class="social-label">LinkedIn</span>
+            <span>LinkedIn</span>
           </a>
 
           <!-- GitHub -->
@@ -307,49 +1139,35 @@
             href="https://github.com/aditya-2204"
             target="_blank"
             rel="noopener"
-            class="social-btn"
+            class="social-link-card"
             aria-label="GitHub"
           >
-            <span class="social-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="22"
-                height="22"
-              >
-                <path
-                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-                />
+            <span class="social-icon-box">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
               </svg>
             </span>
-            <span class="social-label">GitHub</span>
+            <span>GitHub</span>
           </a>
 
-          <!-- Gmail -->
+          <!-- Email -->
           <a
             href="mailto:aditya808166@gmail.com"
-            class="social-btn"
+            class="social-link-card"
             aria-label="Email"
           >
-            <span class="social-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="22"
-                height="22"
-              >
-                <path
-                  d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"
-                />
+            <span class="social-icon-box">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.910 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
               </svg>
             </span>
-            <span class="social-label">Gmail</span>
+            <span>Email</span>
           </a>
         </div>
       </div>
 
-      <footer class="footer">
-        <span>© 2026 AI GYM Trainer — Real-time AI Gym Trainer</span>
+      <footer class="site-footer">
+        <span>© 2026 AI Gym Assistance — Developed by Aditya Saxena. Built with MediaPipe & Groq.</span>
       </footer>
     </section>
   </body>

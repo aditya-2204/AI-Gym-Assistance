@@ -179,19 +179,55 @@ def main():
         st.markdown(
             """
             <div style="
-                border: 10px dashed #444;
-                border-radius: 0px;
-                padding: 48px 32px;
+                background: linear-gradient(145deg, #161b22 0%, #0e131b 100%);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 14px;
+                padding: 36px 28px;
                 text-align: center;
-                color: #888;
-                margin-top: 32px;
-                margin-bottom: 32px;
+                margin-top: 24px;
+                margin-bottom: 24px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             ">
-                <h2 style="color:#ccc; margin-bottom:8px;">👈 Set your workout plan</h2>
-                <p style="font-size:1.05rem;">
-                    Choose your exercise, sets and reps in the sidebar,<br>
-                    then click <strong>Start Workout</strong> to activate the camera and AI coach.
+                <span style="
+                    display: inline-block;
+                    background: rgba(88, 166, 255, 0.12);
+                    color: #58a6ff;
+                    border: 1px solid rgba(88, 166, 255, 0.3);
+                    border-radius: 20px;
+                    padding: 4px 14px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    letter-spacing: 0.05em;
+                    margin-bottom: 14px;
+                ">
+                    ⚡ VISION TRACKING READY
+                </span>
+                <h2 style="color: #f0f6fc; margin: 0 0 10px 0; font-size: 1.6rem; font-weight: 700;">
+                    Configure Your Workout in the Sidebar
+                </h2>
+                <p style="color: #8b949e; font-size: 0.95rem; max-width: 500px; margin: 0 auto 24px auto; line-height: 1.5;">
+                    Select an exercise, set your target reps and sets, then press 
+                    <strong style="color: #f0f6fc;">Start Workout</strong> to activate real-time camera coaching.
                 </p>
+                <div style="
+                    display: flex;
+                    justify-content: center;
+                    gap: 16px;
+                    flex-wrap: wrap;
+                ">
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 12px 18px; text-align: left; min-width: 140px;">
+                        <div style="color: #58a6ff; font-weight: 700; font-size: 0.8rem;">STEP 1</div>
+                        <div style="color: #e6edf3; font-weight: 600; font-size: 0.9rem;">Choose Move</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 12px 18px; text-align: left; min-width: 140px;">
+                        <div style="color: #58a6ff; font-weight: 700; font-size: 0.8rem;">STEP 2</div>
+                        <div style="color: #e6edf3; font-weight: 600; font-size: 0.9rem;">Set Targets</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 12px 18px; text-align: left; min-width: 140px;">
+                        <div style="color: #238636; font-weight: 700; font-size: 0.8rem;">STEP 3</div>
+                        <div style="color: #e6edf3; font-weight: 600; font-size: 0.9rem;">Start Camera</div>
+                    </div>
+                </div>
             </div>
             """,
             unsafe_allow_html=True,
