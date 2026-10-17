@@ -134,6 +134,8 @@ To view the landing page:
 
 **Aditya Saxena**  
 - GitHub: [@aditya-2204](https://github.com/aditya-2204)
+- LinkedIn: [Aditya Saxena](https://www.linkedin.com/in/aditya-saxena-976511281)
+- Email: [aditya808166@gmail.com](mailto:aditya808166@gmail.com)
 
 ---
 
